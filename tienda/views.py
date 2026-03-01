@@ -73,7 +73,7 @@ class VentaViewSet(ModelViewSet):
 
                 VentaDetalle.objects.create(venta=venta,producto=producto, cantidad=cantidad, precio=producto.precio)
 
-                producto.cantidad += cantidad
+                producto.cantidad -= cantidad
                 producto.save()
 
             venta.total = total_acumulado
@@ -83,4 +83,5 @@ class VentaViewSet(ModelViewSet):
         except ValueError as e:
 
             return Response({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
