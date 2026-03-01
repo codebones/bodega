@@ -13,8 +13,8 @@ class Producto(BaseModel):
     nombre = models.CharField(unique=True)
     cantidad = models.IntegerField(default=0)
     descripcion = models.TextField()
-    categoria = models.ForeignKey('Categoria', on_delete=models.CASCADE)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
+    categoria = models.ForeignKey('Categoria', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre
@@ -35,5 +35,4 @@ class Categoria(BaseModel):
     class Meta:
         ordering = ['-fecha_creacion']
         verbose_name = "Categoria"
-
         verbose_name_plural = "Categorias"
