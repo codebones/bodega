@@ -80,6 +80,7 @@ class VentaViewSet(ModelViewSet):
             venta.save()
 
             return Response({"message":"Venta creada"}, status=status.HTTP_201_CREATED)
-        except ValueError:
+        except ValueError as e:
 
-            return Response({"error":"error"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
