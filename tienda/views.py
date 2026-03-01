@@ -19,7 +19,7 @@ class CompraViewSet(ModelViewSet):
     def create(self,request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        detalles = serializer.validated_data.pop("detalles")
+        detalles = serializer.validated_data.pop("compradetalle_set")
 
         if not detalles:
             return Response({"message":"Debes enviar al menos un producto"}, status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -54,7 +54,7 @@ class VentaViewSet(ModelViewSet):
         try:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            detalles = serializer.validated_data.pop("detalles")
+            detalles = serializer.validated_data.pop("ventadetalle_set")
 
             if not detalles:
                 return Response({"message":"Debes enviar al menos un producto"}, status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -83,5 +83,4 @@ class VentaViewSet(ModelViewSet):
         except ValueError as e:
 
             return Response({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
 
