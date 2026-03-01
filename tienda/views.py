@@ -39,8 +39,6 @@ class CompraViewSet(ModelViewSet):
             producto.cantidad += cantidad
             producto.save()
 
-
-
         compra.total = total_acumulado
         compra.save()
 
@@ -67,23 +65,21 @@ class VentaViewSet(ModelViewSet):
             for item in detalles:
                 producto = item["producto"]
                 cantidad = item["cantidad"]
-                precio = item["precio"]
 
-                total_acumulado += (cantidad*precio)
+                total_acumulado += (cantidad*producto.precio)
 
                 if producto.cantidad < cantidad:
                     raise ValueError(f"No se posee stock para el producto {producto.nombre}")
 
-                VentaDetalle.objects.create(venta=venta,producto=producto, cantidad=cantidad, precio=precio)
+                VentaDetalle.objects.create(venta=venta,producto=producto, cantidad=cantidad, precio=producto.precio)
 
                 producto.cantidad += cantidad
                 producto.save()
-
-
 
             venta.total = total_acumulado
             venta.save()
 
             return Response({"message":"Venta creada"}, status=status.HTTP_201_CREATED)
         except ValueError:
+
             return Response({"error":"error"}, status=status.HTTP_400_BAD_REQUEST)
