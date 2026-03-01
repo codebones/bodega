@@ -45,7 +45,7 @@ class CompraViewSet(ModelViewSet):
         return Response({"message":"Compra creada"}, status=status.HTTP_201_CREATED)
     
 class VentaViewSet(ModelViewSet):
-    queryset = Compra.objects.all()
+    queryset = Venta.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = VentaSerializer
 
@@ -83,4 +83,5 @@ class VentaViewSet(ModelViewSet):
         except ValueError as e:
 
             return Response({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
